@@ -27,7 +27,7 @@ def message(request) :
     todayW = localtime().tm_wday
     todayD = datetime.now()
 
-    inFp = open("/home/ubuntu/myproject/haksik/weekMeal.txt", "r", encoding = "utf-8")
+    inFp = open('/home/ubuntu/myproject/haksik/weekMeal.txt', 'r', encoding = 'utf-8')
     # open에는 경로 설정 필수#
     oldList = []
     for inline in inFp.readlines() :
@@ -68,7 +68,7 @@ def message(request) :
 
     # 분기문 #
 
-    if returnStr == "오늘" :
+    if returnStr == '오늘' :
         if wArr[todayW] == 'sat' or wArr[todayW] == 'sun' :
             return JsonResponse (
             {
@@ -94,7 +94,7 @@ def message(request) :
             }
         )
 
-    elif returnStr == "내일" :
+    elif returnStr == '내일' :
         if wArr[todayW] == 'fri' or wArr[todayW] == 'sat' :
             return JsonResponse (
             {
@@ -120,7 +120,7 @@ def message(request) :
             }
         )
 
-    elif returnStr == "요일지정" :
+    elif returnStr == '요일지정' :
         return JsonResponse (
         {
             'message': {
@@ -133,7 +133,7 @@ def message(request) :
         }
     )
 
-    elif returnStr == "상시메뉴" :
+    elif returnStr == '상시메뉴' :
         return JsonResponse (
         {
             'message': {
@@ -146,7 +146,7 @@ def message(request) :
         }
     )
 
-    elif returnStr == "기타문의" :
+    elif returnStr == '기타문의' :
         return JsonResponse (
         {
             'message': {
@@ -159,7 +159,7 @@ def message(request) :
         }
     )
 
-    elif returnStr == "초기화면" :
+    elif returnStr == '초기화면' :
         return JsonResponse (
         {
             'message': {
