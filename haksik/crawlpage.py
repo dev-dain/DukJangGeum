@@ -1,32 +1,54 @@
+'''
+이 모듈은 식단 웹페이지의 정보를 BeautifulSoup로 가져와
+필요한 정보인 텍스트만 가져오는 필터링 작업을 거쳐
+txt 파일에 저장합니다.
+
+사용 변수 목록
+out_fp (_io.TextIOWrapper)
+html (http.client.HTTPResponse)
+source (bytes)
+soup (bs4.BeautifulSoup)
+contents_table (bs4.element.Tag)
+target_table (bs4.element.Tag)
+temp_str (str)
+temp_list (list)
+origin_list (list)
+i (int)
+line (str)
+
+'''
+
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import os
 
+
 if os.path.exists('weekMeal.txt') :
     os.remove('weekMeal.txt')
 
-outFp = open('weekMeal.txt', 'w', encoding = 'utf-8')
-html = urlopen('http://www.duksung.ac.kr/life/foodmenu/index.jsp?cafeId=CID01&weekFlag=1&startDate=20181015&endDate=20181019&cafeName=%C7%D0%BB%FD%BD%C4%B4%E7&categoryCnt=1&cafeFlag=')
+out_fp = open('weekMeal.txt', 'w', encoding='utf-8')
+html = urlopen('http://www.duksung.ac.kr/life/foodmenu/index.jsp')
 source = html.read()
 html.close()
 
 soup = BeautifulSoup(source, 'lxml')
-tableDiv = soup.find(id = 'contents')
-tables = tableDiv.find('table')
+contents_table = soup.find(id='contents')
+target_table = contents_table.find('table')
 
-newStr = tables.get_text()
-newStr = newStr.strip('\n')
-newStr = newStr.replace('\t', '')
-newStr = newStr.replace('\n', '\t')
-newStr = newStr.replace('\r', '\n')
+temp_str = target_table.get_text()
+temp_str = temp_str.strip('\n')
+temp_str = temp_str.replace('\t', '')
+temp_str = temp_str.replace('\n', '\t')
+temp_str = temp_str.replace('\r', '\n')
 
-oldList = newStr.split('\t')
-newList = []
-for i in range (len(oldList)) :
-    if oldList[i]!='' :
-        newList.append(oldList[i])
+temp_list = temp_str.split('\t')
+origin_list = []
 
-for line in newList :
-    outFp.writelines(line+'\r\r')
+for i in range (len(temp_list)) :
+    if temp_list[i] :
+        origin_list.append(temp_list[i])
 
-outFp.close()
+for line in origin_list :
+    out_fp.writelines(line+'\r\r')
+
+out_fp.close()
