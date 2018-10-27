@@ -16,6 +16,7 @@ i (int)
 line (str)
 
 """
+# Import
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import os
@@ -23,10 +24,11 @@ import sys
 import shutil
 
 
+# Function
 def find_table(source):
     """
     id가 'contents'인 <div>를 찾고 <table>을 찾아 반환한다.
-    bytes 타입 매개변수를 받아 bs4.element.Tag 타입 변수를 return한다.
+    prm type: bytes, return type: bs4.element.Tag
     
     """
     soup = BeautifulSoup(source, 'lxml')
@@ -37,7 +39,7 @@ def find_table(source):
 def parse_table(target_table):
     """
     <table>에서 escape sequence를 최소한으로 줄인다.
-    bs4.element.Tag 타입 매개변수를 받아 str 타입 변수를 return한다.
+    prm type: bs4.element.Tag, return type: str
 
     """
     temp_str = target_table.get_text()
@@ -50,7 +52,7 @@ def parse_table(target_table):
 def get_clean_list(temp_str):
     """
     temp_str을 리스트에 넣고, 비어있지 않은 것을 최종 리스트에 append한다.
-    str 타입 매개변수를 받아 list 타입 변수를 return한다.
+    prm type: str, return type: list
     
     """
     temp_list = temp_str.split('\t')
@@ -89,6 +91,6 @@ def go_crawl():
         out_fp.writelines(line)
     out_fp.close()
 
-
+# main
 if __name__ == '__main__':
     go_crawl()
