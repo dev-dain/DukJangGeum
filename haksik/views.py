@@ -63,9 +63,9 @@ def message(request):
     today_wday = localtime().tm_wday
     today_now = datetime.now()
     file_path = '/home/ubuntu/myproject/haksik/weekMeal.txt'
-
     # open에는 full 경로 설정 필수
     in_fp = open(file_path, 'r', encoding='utf-8')
+    
     temp_list = []
     for line in in_fp.readlines():
         temp_list.append(line)
@@ -77,13 +77,11 @@ def message(request):
     temp_str = temp_str.strip('\n')
     meal_list = []
     meal_list = temp_str.split('\n\n')
-
     in_fp.close()
     
     for i in range(8, 15):
         if meal_list[i]=='\xa0' or meal_list[i]=='\r\r' or len(meal_list[i])<12:
             meal_list[i]+='학식이 없는 날이거나 홈페이지에 등록되지 않았습니다.'
-
     add_text=''
 
     for i in range(8, 13):

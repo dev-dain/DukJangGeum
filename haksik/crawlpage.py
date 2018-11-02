@@ -21,7 +21,6 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import os
 import sys
-import shutil
 
 
 # Function
@@ -29,7 +28,7 @@ def find_table(source):
     """
     id가 'contents'인 <div>를 찾고 <table>을 찾아 반환한다.
     prm type: bytes, return type: bs4.element.Tag
-    
+
     """
     soup = BeautifulSoup(source, 'lxml')
     contents_div = soup.find(id='contents')
@@ -56,11 +55,8 @@ def get_clean_list(temp_str):
     
     """
     temp_list = temp_str.split('\t')
-    origin_list = []
-    for i in range (len(temp_list)):
-        if temp_list[i]:
-            origin_list.append(temp_list[i]+'\r\r')
-    return origin_list
+    # temp_list에서 빈 element를 제외한 나머지를 리스트에 넣어 return
+    return [tmp+'\r\r' for tmp in temp_list if tmp]
 
 def go_crawl():
     """
@@ -70,27 +66,29 @@ def go_crawl():
     
     """
     if os.path.exists('weekMeal.txt'):
-        shutil.copy('weekMeal.txt', 'weekMeal_copy.txt')
         os.remove('weekMeal.txt')
+    
     url = 'http://www.duksung.ac.kr/life/foodmenu/index.jsp?' \
-            'cafeId=CID01&weekFlag=1&startDate=20181029&endDate=20181102&' \
+            'cafeId=CID01&weekFlag=1&startDate=20181105&endDate=20181109&' \
             'cafeName=%C7%D0%BB%FD%BD%C4%B4%E7&categoryCnt=1&cafeFlag='
     out_fp = open('weekMeal.txt', 'w', encoding='utf-8') 
+    
     try:
         html = urlopen(url)
         source = html.read()
         html.close()
     except:
         out_fp.close()
-        shutil.copy('weekMeal_copy.txt', 'weekMeal.txt')
         sys.exit()
+    
     target_table = find_table(source)
     temp_str = parse_table(target_table)
     origin_list = get_clean_list(temp_str)
+    
     for line in origin_list:
         out_fp.writelines(line)
     out_fp.close()
 
-# main
+# Main
 if __name__ == '__main__':
     go_crawl()
