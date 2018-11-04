@@ -19,6 +19,7 @@ add_text (str)
 i (int)
 j (int)
 day (dict)
+date (dict)
 
 """
 # Import
@@ -99,7 +100,9 @@ def message(request):
 
     day = {'mon': meal_list[8], 'tue': meal_list[9], 'wed': meal_list[10], 
             'thu': meal_list[11], 'fri': meal_list[12], 'every': meal_list[14]}
-
+    date = {'mon': meal_list[2], 'tue': meal_list[3], 'wed': meal_list[4],
+            'thu': meal_list[5], 'fri': meal_list[6]}
+    
     # 분기문
     if return_str=='오늘':
         if wday_arr[today_wday]=='sat' or wday_arr[today_wday]=='sun':
@@ -118,8 +121,9 @@ def message(request):
             return JsonResponse(
             {
                 'message': {
-                    'text': ''+today_now.strftime('%Y년 %m월 %d')+'일\n'\
-                            '오늘의 학식입니다.\n\n'+day[wday_arr[today_wday]]+''
+                    'text': ''+today_now.strftime('%m월 %d')+'일\n'\
+                            '오늘의 학식입니다.\n\n'+
+                            day[wday_arr[today_wday]]
                 },
                 'keyboard': {
                     'type': 'buttons',
@@ -145,8 +149,10 @@ def message(request):
             return JsonResponse(
             {
                 'message': {
-                    'text': '내일 학식입니다.\n\n'\
-                            ''+day[wday_arr[(today_wday+1)%7]]+''
+                    'text': today_now.strftime('%m월 ')+
+                            date[wday_arr[(today_wday+1)%7]]+'\n'+
+                            '내일 학식입니다.\n\n'+ 
+                            day[wday_arr[(today_wday+1)%7]]
                 },
                 'keyboard': {
                     'type': 'buttons',
@@ -217,7 +223,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '월요일 학식입니다.\n\n'+day['mon']+''
+                'text': today_now.strftime('%m월 ')+date['mon']+
+                        ' 학식입니다.\n\n'+day['mon']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -230,7 +237,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '화요일 학식입니다.\n\n'+day['tue']+''
+                'text': today_now.strftime('%m월 ')+date['tue']+
+                        ' 학식입니다.\n\n'+day['tue']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -243,7 +251,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '수요일 학식입니다.\n\n'+day['wed']+''
+                'text': today_now.strftime('%m월 ')+date['wed']+
+                        ' 학식입니다.\n\n'+day['wed']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -256,7 +265,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '목요일 학식입니다.\n\n'+day['thu']+''
+                'text': today_now.strftime('%m월 ')+date['thu']+
+                        ' 학식입니다.\n\n'+day['thu']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -269,7 +279,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '금요일 학식입니다.\n\n'+day['fri']+''
+                'text': today_now.strftime('%m월 ')+date['fri']+
+                        ' 학식입니다.\n\n'+day['fri']
             },
             'keyboard': {
                 'type': 'buttons',
@@ -282,7 +293,8 @@ def message(request):
         return JsonResponse(
         {
             'message': {
-                'text': '개발 중이거나 오류입니다. 관리자에게 문의해주세요.'
+                'text': '개발 중이거나 오류입니다.'\
+                        '관리자에게 문의해주세요.'
             },
             'keyboard': {
                 'type': 'buttons',
