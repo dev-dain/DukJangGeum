@@ -68,9 +68,7 @@ def go_crawl():
     if os.path.exists('weekMeal.txt'):
         os.remove('weekMeal.txt')
     
-    url = 'http://www.duksung.ac.kr/life/foodmenu/index.jsp?' \
-            'cafeId=CID01&weekFlag=1&startDate=20181105&endDate=20181109&' \
-            'cafeName=%C7%D0%BB%FD%BD%C4%B4%E7&categoryCnt=1&cafeFlag='
+    url = 'http://www.duksung.ac.kr/life/foodmenu/index.jsp?'
     out_fp = open('weekMeal.txt', 'w', encoding='utf-8') 
     
     try:
