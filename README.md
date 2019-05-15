@@ -1,3 +1,6 @@
+# 주 목
+이 저장소는 이전 코드 저장소입니다. 현재 [덕성여대 학식 페이지](http://www.duksung.ac.kr/diet/schedule.do?menuId=1151)를 긁어 응답하는 소스는 [새로운 repo](https://github.com/dev-jaimie/DukJangGuem-the-Gourmet)에 있습니다.
+
 # DukJangGeum
 덕성여자대학교 학식알리미 카카오톡 플러스친구 소스코드를 관리합니다!<br>
 이 코드는 MIT 라이선스 하에 사용 가능합니다.<br><br>
